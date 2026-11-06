@@ -1,0 +1,81 @@
+<UserControl x:Class="IslandApp.SettingsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+
+        <Grid Height="33">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Эквалайзер" FontSize="13"/>
+                <TextBlock Text="Полоски в свёрнутом виде и на вкладке «Медиа»"
+                           FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            </StackPanel>
+            <ToggleButton x:Name="EqToggle" Grid.Column="1" Style="{StaticResource Switch}"
+                          VerticalAlignment="Center" Click="Toggle_Click"/>
+        </Grid>
+        <Border Height="1" Background="{StaticResource Separator}"/>
+
+        <Grid Height="33">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Анимация градиента" FontSize="13"/>
+                <TextBlock Text="Свечение в цвет обложки медленно плавает, пока играет музыка"
+                           FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            </StackPanel>
+            <ToggleButton x:Name="GradientToggle" Grid.Column="1" Style="{StaticResource Switch}"
+                          VerticalAlignment="Center" Click="Toggle_Click"/>
+        </Grid>
+        <Border Height="1" Background="{StaticResource Separator}"/>
+
+        <Grid Height="33">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Уровень заряда" FontSize="13"/>
+                <TextBlock Text="Заряд батареи слева в свёрнутом виде (только на ноутбуках)"
+                           FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            </StackPanel>
+            <ToggleButton x:Name="BatteryToggle" Grid.Column="1" Style="{StaticResource Switch}"
+                          VerticalAlignment="Center" Click="Toggle_Click"/>
+        </Grid>
+        <Border Height="1" Background="{StaticResource Separator}"/>
+
+        <Grid Height="33">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Скрывать в полноэкранном режиме" FontSize="13"/>
+                <TextBlock Text="Игры, видео на весь экран, презентации"
+                           FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            </StackPanel>
+            <ToggleButton x:Name="FullscreenToggle" Grid.Column="1" Style="{StaticResource Switch}"
+                          VerticalAlignment="Center" Click="Toggle_Click"/>
+        </Grid>
+        <Border Height="1" Background="{StaticResource Separator}"/>
+
+        <Grid Height="33">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Минимальный режим" FontSize="13"/>
+                <TextBlock Text="Остров превращается в тонкую линию, раскрывается при наведении"
+                           FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            </StackPanel>
+            <ToggleButton x:Name="MinimalToggle" Grid.Column="1" Style="{StaticResource Switch}"
+                          VerticalAlignment="Center" Click="Toggle_Click"/>
+        </Grid>
+
+    </StackPanel>
+</UserControl>

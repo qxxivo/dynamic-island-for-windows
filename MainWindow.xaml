@@ -1,0 +1,256 @@
+﻿<Window x:Class="IslandApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:IslandApp"
+        Title="Island"
+        Width="500"
+        Height="300"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        FontFamily="Segoe UI Variable Text, Segoe UI"
+        FontSize="13"
+        Foreground="White"
+        UseLayoutRounding="True"
+        AllowDrop="True"
+        DragEnter="Window_DragEnter"
+        DragOver="Window_DragOver"
+        Drop="Window_Drop">
+
+    <Grid>
+        <!-- Сам остров: окно остаётся неподвижным, меняется только размер этого элемента -->
+        <Border x:Name="RootBorder"
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Width="120" Height="30" ClipToBounds="True"
+                Background="Black" CornerRadius="0,0,15,15"
+                BorderBrush="#26FFFFFF" BorderThickness="1,0,1,1"
+                AllowDrop="True">
+            <Grid>
+
+                <!-- ===== Цветное свечение (два мягких пятна под цвет обложки) ===== -->
+                <Border x:Name="GlowA" IsHitTestVisible="False"/>
+                <Border x:Name="GlowB" IsHitTestVisible="False"/>
+
+                <!-- ===== Свёрнутая строка ===== -->
+                <Grid x:Name="CompactRow" Height="30" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Слева: обложка трека и батарея -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Margin="12,0,0,0">
+                        <Border x:Name="MiniCover" Width="20" Height="20" CornerRadius="6"
+                                Background="#2C2C2E" Margin="0,0,8,0" Visibility="Collapsed"/>
+
+                        <StackPanel x:Name="BatteryPanel" Orientation="Horizontal"
+                                    VerticalAlignment="Center" Visibility="Collapsed">
+                            <Grid Width="22" Height="11" VerticalAlignment="Center">
+                                <Border BorderBrush="#8E8E93" BorderThickness="1" CornerRadius="3"
+                                        Margin="0,0,2,0"/>
+                                <Border x:Name="BatteryFill" Background="White" CornerRadius="1.5"
+                                        Margin="2,2,4,2" Width="14" HorizontalAlignment="Left"/>
+                                <Border Width="2" Height="4" Background="#8E8E93"
+                                        CornerRadius="0,1,1,0" HorizontalAlignment="Right"/>
+                            </Grid>
+                            <TextBlock x:Name="BatteryText" FontSize="11" Foreground="#AEAEB2"
+                                       Margin="6,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- По центру: время -->
+                    <TextBlock x:Name="ClockText" Grid.Column="1" FontSize="13" FontWeight="SemiBold"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    <!-- Справа: мини-эквалайзер -->
+                    <local:EqualizerBars x:Name="MiniEq" Grid.Column="2" Width="20" Height="12"
+                                         BarCount="5" BarRatio="0.55"
+                                         HorizontalAlignment="Right" VerticalAlignment="Center"
+                                         Margin="0,0,16,0"/>
+                </Grid>
+
+                <!-- ===== Раскрытая часть (фиксированный размер, чтобы не перестраиваться при анимации) ===== -->
+                <Grid x:Name="ExpandedContent" Width="420" Height="212"
+                      HorizontalAlignment="Center" VerticalAlignment="Top"
+                      Margin="0,40,0,0" Opacity="0" AllowDrop="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Вкладки -->
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="TabMedia" Style="{StaticResource TabButton}"
+                                    ToolTip="Медиа" Click="TabMediaClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconMusic}"/>
+                            </Button>
+                            <Button x:Name="TabClip" Style="{StaticResource TabButton}"
+                                    ToolTip="Буфер обмена" Click="TabClipClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconClipboard}"/>
+                            </Button>
+                            <Button x:Name="TabShelf" Style="{StaticResource TabButton}"
+                                    ToolTip="Файлы" Click="TabShelfClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconFolder}"/>
+                            </Button>
+                            <Button x:Name="TabTimer" Style="{StaticResource TabButton}"
+                                    ToolTip="Таймер и будильник" Click="TabTimerClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconAlarm}"/>
+                            </Button>
+                            <Button x:Name="TabNotes" Style="{StaticResource TabButton}"
+                                    ToolTip="Заметки" Click="TabNotesClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconEdit}"/>
+                            </Button>
+                            <Button x:Name="TabSystem" Style="{StaticResource TabButton}"
+                                    ToolTip="Система" Click="TabSystemClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconChip}"/>
+                            </Button>
+                            <Button x:Name="TabWeather" Style="{StaticResource TabButton}"
+                                    ToolTip="Погода" Click="TabWeatherClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconCloud}"/>
+                            </Button>
+                            <Button x:Name="TabSettings" Style="{StaticResource TabButton}"
+                                    ToolTip="Настройки" Click="TabSettingsClick">
+                                <Path Style="{StaticResource Glyph}" Data="{StaticResource IconGear}"/>
+                            </Button>
+                        </StackPanel>
+
+                        <Button x:Name="ClearButton" Style="{StaticResource TextButton}"
+                                Content="Очистить" HorizontalAlignment="Right" Click="ClearClick"/>
+                    </Grid>
+
+                    <!-- Вкладка: настройки -->
+                    <local:SettingsPanel x:Name="SettingsPanelView" Grid.Row="1"
+                                         Margin="0,12,0,0" Visibility="Collapsed"/>
+
+                    <!-- Вкладка: погода -->
+                    <local:WeatherPanel x:Name="WeatherPanelView" Grid.Row="1"
+                                        Margin="0,12,0,0" Visibility="Collapsed"/>
+
+                    <!-- Вкладка: система -->
+                    <local:SystemPanel x:Name="SystemPanelView" Grid.Row="1"
+                                       Margin="0,12,0,0" Visibility="Collapsed"/>
+
+                    <!-- Вкладка: заметки -->
+                    <local:NotesPanel x:Name="NotesPanelView" Grid.Row="1"
+                                      Margin="0,12,0,0" Visibility="Collapsed"/>
+
+                    <!-- Вкладка: таймер и будильник -->
+                    <local:TimerPanel x:Name="TimerPanelView" Grid.Row="1"
+                                      Margin="0,12,0,0" Visibility="Collapsed"/>
+
+                    <!-- Вкладка: медиа -->
+                    <Grid x:Name="MediaPanel" Grid.Row="1" Margin="0,12,0,0" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="76"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="CoverBorder" Width="64" Height="64" CornerRadius="12"
+                                Background="#2C2C2E" HorizontalAlignment="Left"/>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock x:Name="TitleText" FontSize="14" FontWeight="SemiBold"
+                                       TextTrimming="CharacterEllipsis" Text="Ничего не играет"/>
+                            <TextBlock x:Name="ArtistText" FontSize="12"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <StackPanel Orientation="Horizontal" Margin="-8,6,0,0">
+                                <Button Style="{StaticResource IconButton}" Click="PrevClick">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource IconPrev}"/>
+                                </Button>
+                                <Button x:Name="PlayPauseButton" Style="{StaticResource IconButton}"
+                                        Click="PlayPauseClick">
+                                    <Path x:Name="PlayPauseIcon" Style="{StaticResource Glyph}"
+                                          Data="{StaticResource IconPlay}" Width="20" Height="20"/>
+                                </Button>
+                                <Button Style="{StaticResource IconButton}" Click="NextClick">
+                                    <Path Style="{StaticResource Glyph}" Data="{StaticResource IconNext}"/>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <local:EqualizerBars x:Name="BigEq" Grid.Row="1" Grid.ColumnSpan="2"
+                                             Height="34" Margin="0,16,0,0"
+                                             BarCount="36" BarRatio="0.45"/>
+                    </Grid>
+
+                    <!-- Вкладка: буфер обмена -->
+                    <Grid x:Name="ClipPanel" Grid.Row="1" Margin="0,12,0,0" Visibility="Collapsed">
+                        <TextBlock x:Name="ClipEmptyText" FontSize="12"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Text="Скопируй что-нибудь, и оно появится здесь"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <ItemsControl x:Name="ClipList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource ClipItem}"
+                                                Content="{Binding Preview}"
+                                                Tag="{Binding Full}"
+                                                Click="ClipItemClick"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+
+                    <!-- Вкладка: файлы -->
+                    <Grid x:Name="ShelfPanel" Grid.Row="1" Margin="0,12,0,0"
+                          Visibility="Collapsed" AllowDrop="True">
+                        <TextBlock x:Name="ShelfEmptyText" FontSize="12" TextWrapping="Wrap"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Text="Перетащи сюда файлы. Потом их можно перетащить из острова в любое приложение."/>
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <ItemsControl x:Name="ShelfList">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="92" Height="72" Margin="0,0,8,8"
+                                                Background="{StaticResource Surface}" CornerRadius="12"
+                                                Cursor="Hand" ToolTip="{Binding Path}"
+                                                PreviewMouseLeftButtonDown="TileMouseDown"
+                                                MouseMove="TileMouseMove">
+                                            <Grid>
+                                                <Image Source="{Binding Icon}" Width="28" Height="28"
+                                                       VerticalAlignment="Top" Margin="0,10,0,0"/>
+                                                <TextBlock Text="{Binding Glyph}" FontSize="24"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                           Margin="0,6,0,0"/>
+                                                <TextBlock Text="{Binding Name}" FontSize="11"
+                                                           TextAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                           VerticalAlignment="Bottom" Margin="6,0,6,7"/>
+                                                <Button Style="{StaticResource IconButton}"
+                                                        Width="20" Height="20"
+                                                        Foreground="{StaticResource TextSecondary}"
+                                                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                        Margin="0,3,3,0" Click="RemoveShelfClick">
+                                                    <Path Style="{StaticResource Glyph}"
+                                                          Data="{StaticResource IconClose}"
+                                                          Width="8" Height="8"/>
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

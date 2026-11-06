@@ -1,0 +1,39 @@
+<UserControl x:Class="IslandApp.SystemPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Процессор -->
+        <StackPanel Grid.Column="0" Margin="0,0,16,0" VerticalAlignment="Center">
+            <TextBlock Text="Процессор" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            <TextBlock x:Name="CpuText" Text="0%" FontSize="36" FontWeight="Light"
+                       Margin="0,2,0,10"/>
+            <Grid x:Name="CpuTrack" Height="6">
+                <Border Background="{StaticResource Surface2}" CornerRadius="3"/>
+                <Border x:Name="CpuFill" Width="0" HorizontalAlignment="Left"
+                        CornerRadius="3" Background="#30D158"/>
+            </Grid>
+        </StackPanel>
+
+        <Border Grid.Column="1" Background="{StaticResource Separator}"/>
+
+        <!-- Память -->
+        <StackPanel Grid.Column="2" Margin="16,0,0,0" VerticalAlignment="Center">
+            <TextBlock Text="Память" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+            <TextBlock x:Name="RamText" Text="0%" FontSize="36" FontWeight="Light"
+                       Margin="0,2,0,10"/>
+            <Grid x:Name="RamTrack" Height="6">
+                <Border Background="{StaticResource Surface2}" CornerRadius="3"/>
+                <Border x:Name="RamFill" Width="0" HorizontalAlignment="Left"
+                        CornerRadius="3" Background="#30D158"/>
+            </Grid>
+            <TextBlock x:Name="RamDetail" FontSize="11"
+                       Foreground="{StaticResource TextSecondary}" Margin="0,8,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

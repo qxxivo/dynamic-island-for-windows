@@ -1,0 +1,17 @@
+<UserControl x:Class="IslandApp.NotesPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="{StaticResource Surface}" CornerRadius="12">
+        <Grid>
+            <TextBox x:Name="NotesBox"
+                     Style="{StaticResource Field}" Background="Transparent"
+                     Padding="14,12" AcceptsReturn="True" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Hidden"
+                     TextChanged="NotesBox_TextChanged"
+                     LostKeyboardFocus="NotesBox_LostKeyboardFocus"/>
+            <TextBlock x:Name="Placeholder" Text="Быстрая заметка. Сохраняется сама."
+                       Foreground="{StaticResource TextTertiary}" FontSize="13"
+                       Margin="19,13,0,0" IsHitTestVisible="False"/>
+        </Grid>
+    </Border>
+</UserControl>

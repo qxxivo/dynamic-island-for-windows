@@ -1,0 +1,81 @@
+<UserControl x:Class="IslandApp.WeatherPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.3*"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Сейчас -->
+        <StackPanel Grid.Column="0" Margin="0,0,16,0">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="CityBox" Style="{StaticResource Field}" Width="150"
+                         FontSize="12" Padding="10,5"
+                         ToolTip="Введи город и нажми Enter"
+                         KeyDown="CityBox_KeyDown"/>
+                <Button Style="{StaticResource IconButton}" Width="32" Height="28"
+                        Margin="4,0,0,0" Click="SearchClick">
+                    <Path Style="{StaticResource Glyph}" Data="{StaticResource IconSearch}"
+                          Width="14" Height="14"/>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <TextBlock x:Name="IconText" FontSize="30" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TempText" Text="--" FontSize="36" FontWeight="Light"
+                           Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBlock x:Name="DescText" FontSize="13"/>
+            <TextBlock x:Name="DetailText" FontSize="11" TextWrapping="Wrap"
+                       Foreground="{StaticResource TextSecondary}"/>
+            <TextBlock x:Name="StatusText" FontSize="11" TextWrapping="Wrap"
+                       Foreground="{StaticResource Orange}" Visibility="Collapsed"/>
+        </StackPanel>
+
+        <Border Grid.Column="1" Background="{StaticResource Separator}"/>
+
+        <!-- Прогноз -->
+        <StackPanel Grid.Column="2" Margin="16,0,0,0" VerticalAlignment="Center">
+            <TextBlock Text="Прогноз" FontSize="11"
+                       Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="58"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="D1Name" FontSize="12" VerticalAlignment="Center"/>
+                <TextBlock x:Name="D1Icon" Grid.Column="1" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock x:Name="D1Temp" Grid.Column="2" FontSize="12" VerticalAlignment="Center"
+                           Foreground="{StaticResource TextSecondary}"/>
+            </Grid>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="58"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="D2Name" FontSize="12" VerticalAlignment="Center"/>
+                <TextBlock x:Name="D2Icon" Grid.Column="1" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock x:Name="D2Temp" Grid.Column="2" FontSize="12" VerticalAlignment="Center"
+                           Foreground="{StaticResource TextSecondary}"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="58"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="D3Name" FontSize="12" VerticalAlignment="Center"/>
+                <TextBlock x:Name="D3Icon" Grid.Column="1" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock x:Name="D3Temp" Grid.Column="2" FontSize="12" VerticalAlignment="Center"
+                           Foreground="{StaticResource TextSecondary}"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
